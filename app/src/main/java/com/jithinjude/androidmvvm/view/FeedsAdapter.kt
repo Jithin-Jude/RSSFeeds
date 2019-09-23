@@ -32,7 +32,7 @@ class FeedsAdapter (
         return feedList.size
     }
 
-    override fun onBindViewHolder(holder: FeedsAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.textViewName.text = feedList[position].name
         holder.textViewMessage.text = feedList[position].message
         holder.textViewTime.text = feedList[position].time

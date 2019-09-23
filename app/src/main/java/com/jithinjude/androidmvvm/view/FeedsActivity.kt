@@ -3,6 +3,7 @@ package com.jithinjude.androidmvvm.view
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.annotation.Nullable
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -14,7 +15,6 @@ import kotlinx.android.synthetic.main.activity_feeds.*
 
 class FeedsActivity : AppCompatActivity() {
 
-    lateinit var feedsAdapter: FeedsAdapter
     lateinit var layoutManager: LinearLayoutManager
 
     var feedList: MutableList<FeedsModel> = ArrayList()
@@ -32,6 +32,7 @@ class FeedsActivity : AppCompatActivity() {
 
         feedsViewModel.getFeeds().observe(this, object : Observer<List<FeedsModel>> {
             override fun onChanged(@Nullable feedList: List<FeedsModel>) {
+                progressBar.visibility = View.GONE
                 rv_feeds.adapter = FeedsAdapter(this@FeedsActivity, feedList)
             }
         })
