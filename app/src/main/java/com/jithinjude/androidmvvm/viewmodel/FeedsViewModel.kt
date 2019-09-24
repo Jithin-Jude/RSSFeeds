@@ -22,19 +22,13 @@ import retrofit2.Retrofit
  */
 
 class FeedsViewModel : ViewModel(){
+    
     private var feedList: MutableLiveData<List<FeedsModel>> = MutableLiveData()
 
     var BASE_URL = "https://api.myjson.com/bins/"
 
     fun getFeeds(): LiveData<List<FeedsModel>> {
 
-        feedList = MutableLiveData()
-        loadFeeds()
-
-        return feedList
-    }
-
-    private fun loadFeeds() {
         val retrofit = Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
@@ -43,16 +37,16 @@ class FeedsViewModel : ViewModel(){
         val api = retrofit.create(Api::class.java)
         val call = api.getFeeds()
 
-
         call.enqueue(object : Callback<List<FeedsModel>> {
             override fun onResponse(call: Call<List<FeedsModel>>, response: Response<List<FeedsModel>>) {
-                Log.d("success","ON RESPONSE"+response.body())
+                Log.d("onResponse","RESPONSE:--------"+response.body())
                 feedList.setValue(response.body())
             }
 
             override fun onFailure(call: Call<List<FeedsModel>>, t: Throwable) {
-                Log.d("fail","ON FAILURE")
+                Log.d("onFailure","ERROR:--------")
             }
         })
+        return feedList
     }
 }

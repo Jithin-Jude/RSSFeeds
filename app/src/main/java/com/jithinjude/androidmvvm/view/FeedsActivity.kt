@@ -17,18 +17,11 @@ class FeedsActivity : AppCompatActivity() {
 
     lateinit var layoutManager: LinearLayoutManager
 
-    var feedList: MutableList<FeedsModel> = ArrayList()
-    lateinit var feedsModel: FeedsModel
+    private val feedsViewModel = ViewModelProviders.of(this).get(FeedsViewModel::class.java)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_feeds)
-
-        val feedsViewModel = ViewModelProviders.of(this).get(FeedsViewModel::class.java)
-
-        feedsModel = FeedsModel("Bill Gates","Welcome to Microsoft","10:00 AM","https://upload.wikimedia.org/wikipedia/commons/a/a0/Bill_Gates_2018.jpg")
-
-        feedList.add(feedsModel)
 
         feedsViewModel.getFeeds().observe(this, object : Observer<List<FeedsModel>> {
             override fun onChanged(@Nullable feedList: List<FeedsModel>) {
