@@ -5,16 +5,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.jithinjude.androidmvvm.model.FeedsModel
 import androidx.lifecycle.LiveData
-import com.jithinjude.androidmvvm.Api
+import com.jithinjude.androidmvvm.repository.Api
+import com.jithinjude.androidmvvm.repository.BASE_URL
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.Retrofit
-
-
-
-
 
 /**
  * Created by <Jithin/Jude> on 30,August,2019.
@@ -22,10 +19,8 @@ import retrofit2.Retrofit
  */
 
 class FeedsViewModel : ViewModel(){
-    
-    private var feedList: MutableLiveData<List<FeedsModel>> = MutableLiveData()
 
-    var BASE_URL = "https://api.myjson.com/bins/"
+    private var feedList: MutableLiveData<List<FeedsModel>> = MutableLiveData()
 
     fun getFeeds(): LiveData<List<FeedsModel>> {
 
