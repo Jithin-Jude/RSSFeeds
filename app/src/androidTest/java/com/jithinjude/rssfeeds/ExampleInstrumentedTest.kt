@@ -1,4 +1,4 @@
-package com.jithinjude.androidmvvm
+package com.jithinjude.rssfeeds
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

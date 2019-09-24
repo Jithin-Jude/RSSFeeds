@@ -1,17 +1,17 @@
-package com.jithinjude.androidmvvm.view
+package com.jithinjude.rssfeeds.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.annotation.Nullable
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.jithinjude.androidmvvm.R
-import com.jithinjude.androidmvvm.model.FeedsModel
-import com.jithinjude.androidmvvm.viewmodel.FeedsViewModel
+import com.jithinjude.rssfeeds.R
+import com.jithinjude.rssfeeds.model.FeedsModel
+import com.jithinjude.rssfeeds.viewmodel.FeedsViewModel
 import kotlinx.android.synthetic.main.activity_feeds.*
+import me.toptas.rssconverter.RssFeed
 
 class FeedsActivity : AppCompatActivity() {
 
@@ -23,10 +23,10 @@ class FeedsActivity : AppCompatActivity() {
 
         val feedsViewModel = ViewModelProviders.of(this).get(FeedsViewModel::class.java)
 
-        feedsViewModel.getFeeds().observe(this, object : Observer<List<FeedsModel>> {
-            override fun onChanged(@Nullable feedList: List<FeedsModel>) {
+        feedsViewModel.getFeeds().observe(this, object : Observer<RssFeed> {
+            override fun onChanged(@Nullable feedList: RssFeed) {
                 progressBar.visibility = View.GONE
-                rv_feeds.adapter = FeedsAdapter(this@FeedsActivity, feedList)
+                rv_feeds.adapter = FeedsAdapter(this@FeedsActivity, feedList.items!!)
             }
         })
 

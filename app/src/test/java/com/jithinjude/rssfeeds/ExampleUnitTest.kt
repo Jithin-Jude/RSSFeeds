@@ -1,4 +1,4 @@
-package com.jithinjude.androidmvvm
+package com.jithinjude.rssfeeds
 
 import org.junit.Test
 
