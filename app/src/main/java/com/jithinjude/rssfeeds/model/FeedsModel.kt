@@ -77,14 +77,6 @@ data class Item(
 
 @Root(strict = false, name = "enclosure")
 data class Enclosure(
-    @field:Attribute(name = "length", required = false)
-    @param:Attribute(name = "length", required = false)
-    var length: String,
-
-    @field:Attribute(name = "type", required = false)
-    @param:Attribute(name = "type", required = false)
-    var type: String,
-
     @field:Attribute(name = "url", required = false)
     @param:Attribute(name = "url", required = false)
     var url: String
