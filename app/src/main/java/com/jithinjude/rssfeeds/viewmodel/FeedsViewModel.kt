@@ -7,13 +7,11 @@ import com.jithinjude.rssfeeds.model.FeedsModel
 import androidx.lifecycle.LiveData
 import com.jithinjude.rssfeeds.repository.Api
 import com.jithinjude.rssfeeds.repository.BASE_URL
-import me.toptas.rssconverter.RssConverterFactory
-import me.toptas.rssconverter.RssFeed
-import me.toptas.rssconverter.RssItem
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
+import retrofit2.converter.simplexml.SimpleXmlConverterFactory
 
 /**
  * Created by <Jithin/Jude> on 30,August,2019.
@@ -22,25 +20,25 @@ import retrofit2.Retrofit
 
 class FeedsViewModel : ViewModel(){
 
-    private var feedList: MutableLiveData<RssFeed> = MutableLiveData()
+    private var feedList: MutableLiveData<FeedsModel> = MutableLiveData()
 
-    fun getFeeds(): LiveData<RssFeed> {
+    fun getFeeds(): LiveData<FeedsModel> {
 
         val retrofit = Retrofit.Builder()
             .baseUrl(BASE_URL)
-            .addConverterFactory(RssConverterFactory.create())
+            .addConverterFactory(SimpleXmlConverterFactory.create())
             .build()
 
         val service = retrofit.create(Api::class.java)
         service.getFeeds()
-            .enqueue(object : Callback<RssFeed> {
-                override fun onResponse(call: Call<RssFeed>, response: Response<RssFeed>) {
+            .enqueue(object : Callback<FeedsModel> {
+                override fun onResponse(call: Call<FeedsModel>, response: Response<FeedsModel>) {
                     Log.d("onResponse","RESPONSE:--------"+response.body())
                     feedList.setValue(response.body())
                 }
 
-                override fun onFailure(call: Call<RssFeed>, t: Throwable) {
-                    // Show failure message
+                override fun onFailure(call: Call<FeedsModel>, t: Throwable) {
+                    Log.d("onFailure","ERROR:--------"+t.toString())
                 }
             })
         return feedList

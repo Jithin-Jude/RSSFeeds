@@ -11,7 +11,6 @@ import com.jithinjude.rssfeeds.R
 import com.jithinjude.rssfeeds.model.FeedsModel
 import com.jithinjude.rssfeeds.viewmodel.FeedsViewModel
 import kotlinx.android.synthetic.main.activity_feeds.*
-import me.toptas.rssconverter.RssFeed
 
 class FeedsActivity : AppCompatActivity() {
 
@@ -23,10 +22,10 @@ class FeedsActivity : AppCompatActivity() {
 
         val feedsViewModel = ViewModelProviders.of(this).get(FeedsViewModel::class.java)
 
-        feedsViewModel.getFeeds().observe(this, object : Observer<RssFeed> {
-            override fun onChanged(@Nullable feedList: RssFeed) {
+        feedsViewModel.getFeeds().observe(this, object : Observer<FeedsModel> {
+            override fun onChanged(@Nullable feedList: FeedsModel) {
                 progressBar.visibility = View.GONE
-                rv_feeds.adapter = FeedsAdapter(this@FeedsActivity, feedList.items!!)
+                rv_feeds.adapter = FeedsAdapter(this@FeedsActivity, feedList.channel.item)
             }
         })
 

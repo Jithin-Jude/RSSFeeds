@@ -1,7 +1,6 @@
 package com.jithinjude.rssfeeds.repository
 
 import com.jithinjude.rssfeeds.model.FeedsModel
-import me.toptas.rssconverter.RssFeed
 import retrofit2.Call
 import retrofit2.http.GET
 
@@ -15,5 +14,5 @@ import retrofit2.http.GET
 interface Api {
 
     @GET("rss_review.php")
-    fun getFeeds(): Call<RssFeed>
+    fun getFeeds(): Call<FeedsModel>
 }
