@@ -4,7 +4,6 @@ import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.annotation.Nullable
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -36,19 +35,34 @@ class FeedsActivity : AppCompatActivity() {
 
         if(shouldLoad){
             feedsViewModel.getFeeds()
-            Toast.makeText(this,"ViewModel",Toast.LENGTH_SHORT).show()
             shouldLoad = false
+        }
+
+        ivRefresh.setOnClickListener {
+            showProgress()
+            feedsViewModel.getFeeds()
         }
     }
 
-    override fun onConfigurationChanged(newConfig: Configuration?) {
+    override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
         shouldLoad = false
     }
+
     private fun loadFeeds(@Nullable feedList: FeedsModel) {
-        progressBar.visibility = View.GONE
-        rv_feeds.adapter = FeedsAdapter(this@FeedsActivity, feedList.channel.item)
+        hideProgress()
+        rvFeeds.adapter = FeedsAdapter(this@FeedsActivity, feedList.channel.item)
         layoutManager = LinearLayoutManager(this)
-        rv_feeds.layoutManager = layoutManager
+        rvFeeds.layoutManager = layoutManager
+    }
+
+    private fun showProgress(){
+        progressBar.visibility = View.VISIBLE
+        rvFeeds.visibility = View.INVISIBLE
+    }
+
+    private  fun hideProgress(){
+        progressBar.visibility = View.GONE
+        rvFeeds.visibility = View.VISIBLE
     }
 }
