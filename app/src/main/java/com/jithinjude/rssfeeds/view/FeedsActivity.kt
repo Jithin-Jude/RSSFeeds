@@ -16,11 +16,13 @@ class FeedsActivity : AppCompatActivity() {
 
     lateinit var layoutManager: LinearLayoutManager
 
+    private val feedsViewModel: FeedsViewModel by lazy {
+        ViewModelProviders.of(this).get(FeedsViewModel::class.java)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_feeds)
-
-        val feedsViewModel = ViewModelProviders.of(this).get(FeedsViewModel::class.java)
 
         feedsViewModel.getFeeds().observe(this, object : Observer<FeedsModel> {
             override fun onChanged(@Nullable feedList: FeedsModel) {
