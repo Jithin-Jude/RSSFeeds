@@ -1,13 +1,18 @@
 package com.jithinjude.rssfeeds.view
 
+import android.content.Context
 import android.content.res.Configuration
+import android.net.ConnectivityManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.ProgressBar
+import android.widget.Toast
 import androidx.annotation.Nullable
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import com.jithinjude.rssfeeds.R
 import com.jithinjude.rssfeeds.model.FeedsModel
 import com.jithinjude.rssfeeds.viewmodel.FeedsViewModel
@@ -34,13 +39,23 @@ class FeedsActivity : AppCompatActivity() {
         })
 
         if(shouldLoad){
-            feedsViewModel.getFeeds()
+            if(isOnline()) {
+                feedsViewModel.getFeeds()
+            }else{
+                hideProgress(progressBar)
+                showMsg("Network not available.")
+            }
             shouldLoad = false
         }
 
         ivRefresh.setOnClickListener {
-            showProgress()
-            feedsViewModel.getFeeds()
+            if(isOnline()) {
+                showProgress(progressBar)
+                feedsViewModel.getFeeds()
+            }else{
+                hideProgress(progressBar)
+                showMsg("Network not available.")
+            }
         }
     }
 
@@ -50,19 +65,30 @@ class FeedsActivity : AppCompatActivity() {
     }
 
     private fun loadFeeds(@Nullable feedList: FeedsModel) {
-        hideProgress()
+        hideProgress(progressBar)
         rvFeeds.adapter = FeedsAdapter(this@FeedsActivity, feedList.channel.item)
         layoutManager = LinearLayoutManager(this)
         rvFeeds.layoutManager = layoutManager
     }
 
-    private fun showProgress(){
+    private fun showProgress(progressBar: ProgressBar){
         progressBar.visibility = View.VISIBLE
         rvFeeds.visibility = View.INVISIBLE
     }
 
-    private  fun hideProgress(){
+    private  fun hideProgress(progressBar: ProgressBar){
         progressBar.visibility = View.GONE
         rvFeeds.visibility = View.VISIBLE
+    }
+
+    private  fun showMsg(message: String){
+        Snackbar.make(findViewById(android.R.id.content), message, Snackbar.LENGTH_LONG).show()
+    }
+
+    private fun isOnline(): Boolean {
+        val connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE)
+                as ConnectivityManager
+        val netInfo = connectivityManager.activeNetworkInfo
+        return netInfo != null && netInfo.isConnected
     }
 }
