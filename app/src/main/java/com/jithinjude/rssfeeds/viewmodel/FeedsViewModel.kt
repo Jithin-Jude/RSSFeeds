@@ -20,7 +20,7 @@ import retrofit2.converter.simplexml.SimpleXmlConverterFactory
 
 class FeedsViewModel : ViewModel(){
 
-    private var feedList: MutableLiveData<FeedsModel> = MutableLiveData()
+    var feedsLiveData: MutableLiveData<FeedsModel> = MutableLiveData()
 
     fun getFeeds(): LiveData<FeedsModel> {
 
@@ -34,13 +34,13 @@ class FeedsViewModel : ViewModel(){
             .enqueue(object : Callback<FeedsModel> {
                 override fun onResponse(call: Call<FeedsModel>, response: Response<FeedsModel>) {
                     Log.d("onResponse","RESPONSE:--------"+response.body())
-                    feedList.setValue(response.body())
+                    feedsLiveData.setValue(response.body())
                 }
 
                 override fun onFailure(call: Call<FeedsModel>, t: Throwable) {
                     Log.d("onFailure","ERROR:--------"+t.toString())
                 }
             })
-        return feedList
+        return feedsLiveData
     }
 }

@@ -10,6 +10,8 @@ import org.simpleframework.xml.Root
  * jithin.jude68@gmail.com
  */
 
+
+
 @Root(strict = false, name = "rss")
 data class FeedsModel(
     @field:Element(name = "channel", required = false)
