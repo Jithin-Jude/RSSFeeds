@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.jithinjude.rssfeeds.R
 import com.jithinjude.rssfeeds.model.FeedsModel
+import com.jithinjude.rssfeeds.model.Item
 import com.jithinjude.rssfeeds.viewmodel.FeedsViewModel
 import kotlinx.android.synthetic.main.activity_feeds.*
 
@@ -23,6 +24,8 @@ var shouldLoad = true
 class FeedsActivity : AppCompatActivity() {
 
     private lateinit var layoutManager: LinearLayoutManager
+
+    private lateinit var feedsItemList: MutableList<Item>
 
     private val feedsViewModel: FeedsViewModel by lazy {
         ViewModelProviders.of(this).get(FeedsViewModel::class.java)
@@ -66,7 +69,8 @@ class FeedsActivity : AppCompatActivity() {
 
     private fun loadFeeds(@Nullable feedList: FeedsModel) {
         hideProgress(progressBar)
-        rvFeeds.adapter = FeedsAdapter(this@FeedsActivity, feedList.channel.item)
+        feedsItemList = feedList.channel.item as MutableList<Item>
+        rvFeeds.adapter = FeedsAdapter(this@FeedsActivity, feedsItemList)
         layoutManager = LinearLayoutManager(this)
         rvFeeds.layoutManager = layoutManager
     }

@@ -18,6 +18,7 @@ import retrofit2.converter.simplexml.SimpleXmlConverterFactory
  * jithin.jude68@gmail.com
  */
 
+@Suppress("DEPRECATION")
 class FeedsViewModel : ViewModel(){
 
     var feedsLiveData: MutableLiveData<FeedsModel> = MutableLiveData()

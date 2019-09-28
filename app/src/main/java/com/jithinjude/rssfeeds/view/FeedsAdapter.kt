@@ -23,7 +23,7 @@ import java.util.*
  */
 class FeedsAdapter (
     private val context: Context,
-    private val feedList: List<Item>
+    private val feedList: MutableList<Item>
 ): RecyclerView.Adapter<FeedsAdapter.ViewHolder>(){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FeedsAdapter.ViewHolder {
